@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Date Request</title>
+    <style>
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background: linear-gradient(to right, #a1c4fd, #c2e9fb);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 40px 60px;
+            border-radius: 20px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            max-width: 400px;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        h1 {
+            color: #00796b;
+            font-size: 28px;
+            margin-bottom: 30px;
+        }
+
+        .heart {
+            color: red;
+            animation: pulse 1s infinite;
+        }
+
+        .buttons {
+            margin-top: 30px;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        button {
+            padding: 15px 25px;
+            font-size: 18px;
+            color: #ffffff;
+            background-color: #00796b;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        button:hover {
+            background-color: #004d40;
+            transform: scale(1.1);
+        }
+
+        #no-button {
+            position: relative;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.2);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        /* Improved background hearts animation */
+        .heart-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .heart-container div {
+            position: absolute;
+            bottom: -100px;
+            width: 20px;
+            height: 20px;
+            background-color: transparent;
+            transform: rotate(45deg);
+            animation: float 10s infinite ease-in;
+        }
+
+        .heart-container div::before,
+        .heart-container div::after {
+            content: '';
+            position: absolute;
+            background-color: red;
+            border-radius: 50%;
+        }
+
+        .heart-container div::before {
+            top: -10px;
+            left: 10px;
+            width: 20px;
+            height: 20px;
+        }
+
+        .heart-container div::after {
+            top: 10px;
+            left: -10px;
+            width: 20px;
+            height: 20px;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(45deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-1000px) rotate(45deg);
+                opacity: 0;
+            }
+        }
+
+        /* Different animation duration for each heart */
+        .heart-container div:nth-child(2) {
+            left: 20%;
+            width: 30px;
+            height: 30px;
+            animation-duration: 15s;
+            animation-delay: 2s;
+        }
+
+        .heart-container div:nth-child(3) {
+            left: 50%;
+            width: 25px;
+            height: 25px;
+            animation-duration: 12s;
+            animation-delay: 4s;
+        }
+
+        .heart-container div:nth-child(4) {
+            left: 70%;
+            width: 15px;
+            height: 15px;
+            animation-duration: 14s;
+            animation-delay: 1s;
+        }
+
+        .heart-container div:nth-child(5) {
+            left: 85%;
+            width: 35px;
+            height: 35px;
+            animation-duration: 18s;
+            animation-delay: 3s;
+        }
+
+        /* Confetti animation */
+        .confetti-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #ffcc00;
+            opacity: 0.8;
+            animation: confetti 5s linear infinite;
+        }
+
+        @keyframes confetti {
+            0% {
+                transform: translateY(0) rotate(0deg);
+            }
+            100% {
+                transform: translateY(100vh) rotate(720deg);
+            }
+        }
+
+        /* Explosion of emojis */
+        .emoji-container {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 50px;
+            opacity: 0;
+            animation: explode 1s ease-out forwards;
+        }
+
+        @keyframes explode {
+            0% {
+                transform: translate(-50%, -50%) scale(0.5);
+                opacity: 0;
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.5);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="heart-container">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+
+    <div class="container">
+        <h1>Will you go on a date with me? <span class="heart">❤️</span></h1>
+        <div class="buttons">
+            <button id="yes-button">Yes</button>
+            <button id="no-button">No</button>
+        </div>
+    </div>
+
+    <div class="confetti-container" id="confetti-container">
+        <!-- Confetti elements generated dynamically -->
+    </div>
+
+    <div class="emoji-container" id="emoji-container">
+        🎉🎊😍💖🥳
+    </div>
+
+    <script>
+        const noButton = document.getElementById('no-button');
+        const confettiContainer = document.getElementById('confetti-container');
+        const emojiContainer = document.getElementById('emoji-container');
+
+        noButton.addEventListener('mouseover', () => {
+            const x = Math.random() * (window.innerWidth - noButton.clientWidth);
+            const y = Math.random() * (window.innerHeight - noButton.clientHeight);
+
+            noButton.style.position = 'absolute';
+            noButton.style.left = `${x}px`;
+            noButton.style.top = `${y}px`;
+        });
+
+        document.getElementById('yes-button').addEventListener('click', () => {
+            emojiContainer.style.display = 'block';
+            setTimeout(() => {
+                showConfetti();
+                emojiContainer.style.display = 'none';
+            }, 1000); // Show confetti after emojis
+        });
+
+        function showConfetti() {
+            confettiContainer.style.display = 'block';
+
+            for (let i = 0; i < 100; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = `${Math.random() * 100}%`;
+                confetti.style.backgroundColor = getRandomColor();
+                confetti.style.animationDelay = `${Math.random() * 5}s`;
+                confettiContainer.appendChild(confetti);
+            }
+
+            setTimeout(() => {
+                confettiContainer.style.display = 'none';
+                confettiContainer.innerHTML = '';
+            }, 5000); // Hide confetti after 5 seconds
+        }
+
+        function getRandomColor() {
+            const colors = ['#ffcc00', '#ff6699', '#66ccff', '#66ff66', '#ff6666'];
+            return colors[Math.floor(Math.random() * colors.length)];
+        }
+    </script>
+</body>
+</html>
